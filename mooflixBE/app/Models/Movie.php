@@ -7,4 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Movie extends Model
 {
     //
+    public $fillable = [ 'title',
+    'year',
+    'imdb_id',
+    'type' ,
+    'poster'];
 }
