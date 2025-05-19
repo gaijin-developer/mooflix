@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Services\FavouriteServices;
+
+use App\Http\Services\FavoriteServices;
 use App\Http\Services\LogServices;
 use App\Http\Services\MovieServices;
 use Exception;
@@ -14,6 +15,7 @@ class FavoritesController extends Controller
 
     public function __construct(
         protected MovieServices $movieServices,
+        protected FavoriteServices $favoriteServices,
     protected LogServices $logService){
 
     }
@@ -24,20 +26,21 @@ class FavoritesController extends Controller
 
             $user = $request->user();
 
-             $createdMovie = $this->movieServices->createNew($submittedData);
+            $createdMovie = $this->movieServices->createNew($submittedData);
 
-            // $this->favoriteService->createNew($createdMovie,$submittedData,$user);
+            $this->favoriteServices->createNew($createdMovie,$user);
 
-            return response()->json(["name"=>$createdMovie]);
+            return response()->json(["name"=>"bill"],200);
+            //return response()->json(["name"=>$createdMovie],200);
         } catch (Exception $e) {
             return response()->json("Failed to create new Object",500);
         }
 
     }
 
-    public function deleteFavourite(Request $request){
+    // public function deleteFavourite(Request $request){
 
-    }
+    // }
 
 
 }
