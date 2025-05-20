@@ -11,7 +11,11 @@ class UsersController extends Controller
 
     public function register(){
         Log::info("hit");
-        return response()->json(["data"=>"route has been hit"],200);
+        return response()->json(["data"=>"Register route has been hit"],200);
+    }
+    public function signin(){
+        Log::info("signin");
+        return response()->json(["data"=>"Sign in route has been hit"],200);
     }
 
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FavoritesController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UsersController;
@@ -12,7 +13,25 @@ Route::get('/', [HomeController::class,"home"]);
 Route::post('/favourites', [FavoritesController::class,"createNew"]);
 Route::delete('/favourites/{favId}', [FavoritesController::class,"deleteFavourite"]);
 
-Route::post('/register', [UsersController::class,"register"]);
+Route::post('/register', [AuthController::class,"register"]);
+Route::post('/signin', [UsersController::class,"signin"]);
+
+///jwt
+Route::group([
+
+    'middleware' => 'api',
+    'prefix' => 'auth'
+
+], function ($router) {
+
+    Route::post('login', 'AuthController@login');
+    Route::post('logout', 'AuthController@logout');
+    Route::post('refresh', 'AuthController@refresh');
+    Route::post('me', 'AuthController@me');
+});
+
+
+///
 
 
 

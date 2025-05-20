@@ -1,8 +1,15 @@
 import { useForm } from "@mantine/form";
 import { Button, Checkbox, Group, TextInput } from "@mantine/core";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
+import { Link } from "react-router";
+import { useState } from "react";
+import NotificationBlock from "../components/ui/NotificationBlock";
 
 function Register() {
+  const [showNotif, setShownotif] = useState<boolean>(false);
+  const [notifText, setNotifText] = useState<string>("");
+  const [registrationSucceeded, setRegistrationSucceeded] =
+    useState<boolean>(false);
   const form = useForm({
     mode: "uncontrolled",
     initialValues: {
@@ -24,19 +31,45 @@ function Register() {
       password: (value) => (value.length >= 6 ? null : "パスワードが無効"),
       repassword: (value, values) =>
         value === values.password ? null : "パスワードが一致しない",
+      termsOfService: (value) => (value == true ? null : "同意してください"),
     },
   });
 
   const submitForm = async (formData: typeof form.values) => {
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-    console.log(backendUrl);
+    try {
+      const response = await axios.post(`${backendUrl}/register`, formData);
 
-    const response = await axios.post(`${backendUrl}/register`, formData);
-    console.log(response);
+      if (response.status == 200) {
+        setNotifText("Created Successfully, redirecting");
+        setRegistrationSucceeded(true);
+        setShownotif(true);
+        return;
+      }
+    } catch {
+      //   const exErr = error as AxiosError;
+      setNotifText("Failed to register new User");
+      setRegistrationSucceeded(false);
+      setShownotif(true);
+    }
   };
+
+  const closeNotification = () => {
+    setNotifText("");
+    setShownotif(false);
+    setRegistrationSucceeded(false);
+  };
+
   return (
     <div className="mt-6">
+      {showNotif && (
+        <NotificationBlock
+          color={registrationSucceeded ? "green" : "red"}
+          notifText={notifText}
+          closeNotif={closeNotification}
+        />
+      )}
       <div className="max-w-[500px] m-auto">
         <form
           onSubmit={form.onSubmit((values) => submitForm(values))}
@@ -105,6 +138,12 @@ function Register() {
             <Group justify="center" mt="md">
               <Button type="submit">ログイン</Button>
             </Group>
+            <div>
+              <p>
+                すでにアカウントをお持ちですか？<Link to="/login">こちら</Link>
+                からサインインしてください。
+              </p>
+            </div>
           </div>
         </form>
       </div>
