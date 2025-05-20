@@ -22,7 +22,7 @@ class HomeController extends Controller
     public function home(){
         try {
             $movies=$this->homeService->getHomeDetails();
-            return response()->json(["res"=>$movies]);
+            return response()->json($movies,200);
         }catch(HttpException $e){
             response()->json();
         }

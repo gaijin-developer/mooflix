@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Route;
 
 // Route
 
-Route::get('/', [HomeController::class,"home"]);
+Route::get('/movies', [HomeController::class,"home"]);
 Route::post('/favourites', [FavoritesController::class,"createNew"]);
 Route::delete('/favourites/{favId}', [FavoritesController::class,"deleteFavourite"]);
 
