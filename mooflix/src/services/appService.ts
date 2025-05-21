@@ -1,14 +1,20 @@
-import axios from "axios";
+import axAPI from "../lib/axios";
+import { refreshToken } from "./userService";
 
-export async function getToken() {
-  const backendUrl = import.meta.env.VITE_BACKEND_BASE_URL;
-  console.log(backendUrl);
-  await axios
-    .get(`${backendUrl}/sanctum/csrf-cookie`)
-    .then((response) => {
-      console.log("see details", response.data);
-    })
-    .catch((e) => {
-      console.log(e);
-    });
+export async function getSearchResults(param: string) {
+  try {
+    const result = await axAPI.get(`/search?s=${param}`);
+    return result.data.Search;
+  } catch {
+    await refreshToken();
+  }
+}
+
+export async function getHomeVideos() {
+  try {
+    const response = await axAPI.get(`/movies`);
+    return response.data.Search;
+  } catch {
+    // console.log("error");
+  }
 }

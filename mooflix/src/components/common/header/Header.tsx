@@ -4,12 +4,14 @@ import SearchBar from "./SearchBar";
 
 function Header() {
   return (
-    <header className="flex justify-between px-4 py-2">
-      <Logo />
-      <div className="flex gap-4">
-        <SearchBar />
-        <AuthButtons />
-      </div>
+    <header className="relative ">
+      <header className="fixed top-0 flex justify-between px-4 py-2 z-2 w-full bg-black/30">
+        <Logo />
+        <div className="flex gap-4">
+          {sessionStorage.getItem("access_token") && <SearchBar />}
+          <AuthButtons />
+        </div>
+      </header>
     </header>
   );
 }

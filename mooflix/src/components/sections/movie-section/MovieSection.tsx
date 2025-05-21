@@ -7,29 +7,15 @@ import MovieCard from "../../ui/MovieCard";
 
 type Props = {
   sectionTitle: string;
+  movies: Movie[];
 };
 
-function MovieSection({ sectionTitle }: Props) {
-  const [movies, setMovies] = useState<Movie[]>([]);
-  useEffect(() => {
-    async function getMovies() {
-      try {
-        const backendUrl = import.meta.env.VITE_BACKEND_URL;
-        const response = await axios.get(`${backendUrl}/movies`);
-
-        setMovies(response.data.Search);
-      } catch {
-        // console.log("error");
-      }
-    }
-
-    getMovies();
-  }, []);
+function MovieSection({ sectionTitle, movies }: Props) {
   return (
     <div className="my-12 m-6">
       <h2 className="text-3xl font-bold">{sectionTitle}</h2>
       <div className="my-4 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 max-w-[1300px] m-auto pb-16">
-        {movies.length < 1 && <LoadingSkeleton />}
+        {/* {movies.length < 1 && <LoadingSkeleton />} */}
         {movies.map((movie: Movie) => (
           <MovieCard
             key={movie.imdbID}

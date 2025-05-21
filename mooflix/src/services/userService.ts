@@ -17,14 +17,12 @@ export async function markMovieAsLiked(movieDetails: Movie): Promise<boolean> {
     const axErr = error as AxiosError;
     if (axErr.status == 401) {
       await refreshToken();
-      //   sessionStorage.removeItem("access_token");
-      //   window.location.href = "/login";
     }
     return false;
   }
 }
 
-async function refreshToken() {
+export async function refreshToken() {
   try {
     const response = await axAPI.post("/auth/refresh");
     const newToken = response.data.access_token;
@@ -32,7 +30,7 @@ async function refreshToken() {
     sessionStorage.setItem("access_token", newToken);
 
     axAPI.defaults.headers.common["Authorization"] = `Bearer ${newToken}`;
-  } catch (error) {
+  } catch {
     sessionStorage.removeItem("access_token");
     window.location.href = "/login";
   }

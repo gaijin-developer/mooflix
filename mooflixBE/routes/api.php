@@ -14,6 +14,9 @@ Route::post('/favourites', [FavoritesController::class,"createNew"]);
 Route::delete('/favourites/{favId}', [FavoritesController::class,"deleteFavourite"]);
 
 Route::post('/register', [AuthController::class,"register"]);
+
+
+Route::get('/search',[HomeController::class,'getSearchResults'])->middleware('auth:api');
 Route::post('/likemovie/{imdbID}', [UsersController::class,"likeMovie"])->middleware('auth:api');
 
 

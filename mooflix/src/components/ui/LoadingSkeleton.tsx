@@ -3,7 +3,7 @@ import { Skeleton } from "@mantine/core";
 function LoadingSkeleton() {
   return (
     <div>
-      <Skeleton />
+      <Skeleton c={"red"} />
     </div>
   );
 }

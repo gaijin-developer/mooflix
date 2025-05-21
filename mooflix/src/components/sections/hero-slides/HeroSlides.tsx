@@ -4,7 +4,7 @@ import classes from "./heroSlides.module.css";
 function HeroSlides() {
   return (
     <div
-      className={`border inset-shadow-[1px_-20px_20px] inset-shadow-indigo-500 ${classes.heroSlider}`}
+      className={`inset-shadow-[1px_-20px_20px] inset-shadow-indigo-500 ${classes.heroSlider}`}
     >
       {/* {heroSectionImages.map((image: string) => (
         <HeroSlide image={image} key={image} />

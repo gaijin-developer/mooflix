@@ -24,6 +24,8 @@ function AuthButtons() {
         <Button
           className="text-[var(--text-primary)] hover:bg-[var(--background-secondary)"
           onClick={logoutUser}
+          color="black"
+          fz={16}
         >
           ログアウト
         </Button>
@@ -32,10 +34,22 @@ function AuthButtons() {
       {!isLoggedIn && (
         <div className="flex gap-4">
           <Link to="/login" className="text-white">
-            <Button className="text-[var(--text-primary)] ">ログイン</Button>
+            <Button
+              color="black"
+              className="text-[var(--text-primary)]"
+              fz={16}
+            >
+              ログイン
+            </Button>
           </Link>
           <Link to="/register">
-            <Button className="text-[var(--text-primary)]">サインアップ</Button>
+            <Button
+              color="black"
+              className="text-[var(--text-primary)]"
+              fz={16}
+            >
+              サインアップ
+            </Button>
           </Link>
         </div>
       )}

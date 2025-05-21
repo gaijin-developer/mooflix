@@ -33,13 +33,12 @@ function SearchBar() {
           {showSearchBar && (
             <div ref={searchBarContainer}>
               <div className="search-box">
-                <Input placeholder="動画タイトル" name="s" />
+                <Input placeholder="動画タイトル" name="s" autoFocus />
               </div>
             </div>
           )}
 
           <Button color="black" onClick={showSearchBarInput}>
-            {/* <b>検索</b> */}
             <Search />{" "}
           </Button>
         </div>

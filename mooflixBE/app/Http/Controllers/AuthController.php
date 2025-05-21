@@ -25,14 +25,18 @@ class AuthController extends Controller
 
         $credentials = request(['email', 'password']);
 
-        if (! $token = auth()->attempt($credentials)) {
+        /** @var \Tymon\JWTAuth\JWTGuard $guard */
+        $guard = auth();
+        if (! $token = $guard->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
         return $this->respondWithToken($token);
     }
     public function logout(){
-        // auth()->logout();
+        /** @var \Tymon\JWTAuth\JWTGuard $guard */
+        $guard = auth();
+        $guard->logout();
         return response()->json(['message' => 'Successfully logged out']);
     }
     /**
@@ -42,7 +46,9 @@ class AuthController extends Controller
      */
     public function refresh()
     {
-        return $this->respondWithToken(auth()->refresh());
+        /** @var \Tymon\JWTAuth\JWTGuard $guard */
+        $guard = auth();
+        return $this->respondWithToken($guard->refresh());
     }
 
     /**
@@ -57,7 +63,6 @@ class AuthController extends Controller
     {
         /** @var \Tymon\JWTAuth\JWTGuard $guard */
             $guard = auth();
-
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',

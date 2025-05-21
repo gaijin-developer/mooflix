@@ -6,8 +6,9 @@ use App\Http\Services\HomeServices;
 use App\Http\Services\LogServices;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use function Pest\Laravel\json;
 
 class HomeController extends Controller
 {
@@ -32,4 +33,14 @@ class HomeController extends Controller
         }
 
     }
+    public function getSearchResults(Request $request){
+        try {
+            $searchWord = $request->s;
+            $movies = $this->homeService->getSearchResults($searchWord);
+            return response()->json($movies,200);
+        } catch (Exception $e) {
+            return response()->json(null,500);
+        }
+    }
+
 }
