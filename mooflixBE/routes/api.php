@@ -14,7 +14,8 @@ Route::post('/favourites', [FavoritesController::class,"createNew"]);
 Route::delete('/favourites/{favId}', [FavoritesController::class,"deleteFavourite"]);
 
 Route::post('/register', [AuthController::class,"register"]);
-Route::post('/signin', [UsersController::class,"signin"]);
+Route::post('/likemovie/{imdbID}', [UsersController::class,"likeMovie"])->middleware('auth:api');
+
 
 ///jwt
 Route::group([
@@ -24,10 +25,9 @@ Route::group([
 
 ], function ($router) {
 
-    Route::post('login', 'AuthController@login');
-    Route::post('logout', 'AuthController@logout');
-    Route::post('refresh', 'AuthController@refresh');
-    Route::post('me', 'AuthController@me');
+    Route::post('/login', [AuthController::class,'login']);
+    Route::post('/logout', [AuthController::class,'logout']);
+    Route::post('/refresh', [AuthController::class,'refresh']);
 });
 
 

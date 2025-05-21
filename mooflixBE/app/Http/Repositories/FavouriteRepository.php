@@ -11,7 +11,7 @@ class FavouriteRepository extends BaseRepository {
     }
     public function createNew(Movie $movie, User $user){
         $this->model->user_id=$user->id;
-        $this->model->movie_id=$movie->id;
+        $this->model->movie_id=$movie->imdbID;
 
         return $this->model->save();
     }

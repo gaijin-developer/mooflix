@@ -1,17 +1,21 @@
 import { useForm } from "@mantine/form";
 import { Button, Group, TextInput } from "@mantine/core";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 
-import { loginUser } from "../services/userService";
-import { useEffect } from "react";
-import { getToken } from "../services/appService";
+import { loginUser } from "../services/authService";
+import { useEffect, useState } from "react";
+import NotificationBlock from "../components/ui/NotificationBlock";
 
 function Login() {
+  const [notification, setNotification] = useState(false);
+
+  const navigate = useNavigate();
+
   const form = useForm({
     mode: "uncontrolled",
     initialValues: {
-      email: "",
-      password: "",
+      email: "frank.entsie301@gmail.com",
+      password: "password",
     },
 
     validate: {
@@ -19,21 +23,37 @@ function Login() {
       password: (value) => (/^\w+/.test(value) ? null : "Invalid email"),
     },
   });
-
   useEffect(() => {
-    async function fetchToken() {
-      const tk = await getToken();
-      console.log(tk);
+    const token = sessionStorage.getItem("access_token");
+    if (token) {
+      navigate("/");
     }
+  }, [navigate]);
 
-    fetchToken();
-  }, []);
+  const signIn = async (values: { email: string; password: string }) => {
+    const response = await loginUser(values);
+    if (response) {
+      window.location.href = "/";
+    } else {
+      setNotification(true);
+    }
+  };
 
+  const closeNotification = () => {
+    setNotification(false);
+  };
   return (
-    <div className="max-w-[500px] m-auto">
+    <div className="grid max-w-[500px] m-auto px-4">
+      {notification && (
+        <NotificationBlock
+          color="red"
+          notifText="ロッグインは出来ませんでした"
+          closeNotif={closeNotification}
+        />
+      )}
       <form
-        onSubmit={form.onSubmit((values) => loginUser(values))}
-        className="border-2 px-4 py-12 rounded-2xl"
+        onSubmit={form.onSubmit((values) => signIn(values))}
+        className="border-2 px-4 py-12 rounded-2xl mt-16"
       >
         <h2 className="text-lg">ログイン</h2>
         <div className=" space-y-4">

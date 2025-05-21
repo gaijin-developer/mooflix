@@ -9,17 +9,16 @@ use Exception;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class FavoriteServices {
-    public $favoriteRepo;
-    public $movieService;
 
-    public function __construct(FavouriteRepository $favoriteRepo){
-        $this->favoriteRepo = $favoriteRepo;
+    public function __construct(protected FavouriteRepository $favoriteRepo,protected LogServices $logServices){
+
     }
 
     public function createNew(Movie $movie, User $user){
         try {
             return $this->favoriteRepo->createNew($movie,$user);
         } catch (Exception $e) {
+            $this->logServices->logError($e->getMessage());
             throw new HttpException(500,"Failed to create new movie");
         }
     }

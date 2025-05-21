@@ -9,12 +9,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('movies', function (Blueprint $table) {
-            $table->id();
-            $table->string('title');
-            $table->string('year');
-            $table->string('imdb_id')->unique();
-            $table->enum('type',["movie", "series", "episode"]);
-            $table->text('poster');
+            $table->string('imdbID')->primary();
+            $table->string('Title');
+            $table->string('Year');
+            $table->enum('Type',["movie", "series", "episode"]);
+            $table->text('Poster');
             $table->timestamps();
         });
     }

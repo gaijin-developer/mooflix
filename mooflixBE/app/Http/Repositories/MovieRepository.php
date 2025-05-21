@@ -10,12 +10,12 @@ class MovieRepository extends BaseRepository {
     }
     public function createNew($movieData){
 
-        return $this->model->firstOrCreate(['imdb_id' => $movieData['imdbID']],[
-            'title' => $movieData['Title'],
-            'year' => $movieData['Year'],
-            'imdb_id' => $movieData['imdbID'],
-            'type' => $movieData['Type'],
-            'poster' => $movieData['Poster'],
+        return $this->model->firstOrCreate(['imdbID' => $movieData['imdbID']],[
+            'Title' => $movieData['Title'],
+            'Year' => $movieData['Year'],
+            'imdbID' => $movieData['imdbID'],
+            'Type' => $movieData['Type'],
+            'Poster' => $movieData['Poster'],
     ]);
     }
 }

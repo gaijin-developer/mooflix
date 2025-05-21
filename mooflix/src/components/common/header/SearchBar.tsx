@@ -28,18 +28,22 @@ function SearchBar() {
   };
   return (
     <div className="flex">
-      {showSearchBar && (
-        <div ref={searchBarContainer}>
-          <div className="search-box">
-            <Input placeholder="動画タイトル" />
-          </div>
+      <form action="">
+        <div className="flex gap-4 items-center">
+          {showSearchBar && (
+            <div ref={searchBarContainer}>
+              <div className="search-box">
+                <Input placeholder="動画タイトル" name="s" />
+              </div>
+            </div>
+          )}
+
+          <Button color="black" onClick={showSearchBarInput}>
+            {/* <b>検索</b> */}
+            <Search />{" "}
+          </Button>
         </div>
-      )}
-      <b>検索</b>
-      <Button color="black" onClick={showSearchBarInput}>
-        {" "}
-        <Search />{" "}
-      </Button>
+      </form>
     </div>
   );
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Services\AuthServices;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
@@ -21,6 +22,7 @@ class AuthController extends Controller
     }
 
     public function login(){
+
         $credentials = request(['email', 'password']);
 
         if (! $token = auth()->attempt($credentials)) {
@@ -30,8 +32,7 @@ class AuthController extends Controller
         return $this->respondWithToken($token);
     }
     public function logout(){
-        auth()->logout();
-
+        // auth()->logout();
         return response()->json(['message' => 'Successfully logged out']);
     }
     /**
@@ -41,7 +42,7 @@ class AuthController extends Controller
      */
     public function refresh()
     {
-        return $this->respondWithToken(auth()->refresh());
+        // return $this->respondWithToken(auth()->refresh());
     }
 
     /**
@@ -49,9 +50,6 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function me(){
-        return response()->json(auth()->user());
-    }
 
 
 
