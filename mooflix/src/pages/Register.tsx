@@ -1,13 +1,15 @@
 import { useForm } from "@mantine/form";
 import { Button, Checkbox, Group, TextInput } from "@mantine/core";
-import axios, { AxiosError } from "axios";
-import { Link } from "react-router";
-import { useState } from "react";
+import axios from "axios";
+import { Link, useNavigate } from "react-router";
+import { useEffect, useState } from "react";
 import NotificationBlock from "../components/ui/NotificationBlock";
+import { registerUser } from "../services/authService";
 
 function Register() {
   const [showNotif, setShownotif] = useState<boolean>(false);
   const [notifText, setNotifText] = useState<string>("");
+  const navigate = useNavigate();
   const [registrationSucceeded, setRegistrationSucceeded] =
     useState<boolean>(false);
   const form = useForm({
@@ -35,19 +37,22 @@ function Register() {
     },
   });
 
+  useEffect(() => {
+    const token = sessionStorage.getItem("access_token");
+    if (token) {
+      navigate("/");
+    }
+  }, [navigate]);
+
   const submitForm = async (formData: typeof form.values) => {
-    const backendUrl = import.meta.env.VITE_BACKEND_URL;
+    const response = await registerUser(formData);
 
-    try {
-      const response = await axios.post(`${backendUrl}/register`, formData);
-
-      if (response.status == 200) {
-        setNotifText("Created Successfully, redirecting");
-        setRegistrationSucceeded(true);
-        setShownotif(true);
-        return;
-      }
-    } catch {
+    if (response) {
+      setNotifText("Created Successfully, redirecting");
+      setRegistrationSucceeded(true);
+      setShownotif(true);
+      return;
+    } else {
       //   const exErr = error as AxiosError;
       setNotifText("Failed to register new User");
       setRegistrationSucceeded(false);

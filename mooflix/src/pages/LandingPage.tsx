@@ -19,7 +19,7 @@ function LandingPage() {
         <div className="absolute top-0 right-0 left-0 bottom-0 bg-black/50 font-bold grid place-items-center z-1">
           <div className="flex flex-col items-center">
             <h1>一緒に映画観ませんか？</h1>
-            <h2 className="mt-12 text-2xl font-bold">家族と？ 　友達と？</h2>
+            <h2 className="mt-12 text-4xl font-bold">家族と！　友達と！</h2>
 
             <div className="mt-12">
               <AuthButtons />

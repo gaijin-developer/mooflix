@@ -16,7 +16,7 @@ function AuthButtons() {
   const logoutUser = () => {
     sessionStorage.removeItem("access_token");
     setIsLoggedIn(false);
-    navigate("/login");
+    navigate("/");
   };
   return (
     <div className="flex gap-6">

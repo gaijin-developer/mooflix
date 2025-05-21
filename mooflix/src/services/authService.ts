@@ -14,3 +14,14 @@ export async function loginUser(values: { email: string; password: string }) {
     return false;
   }
 }
+
+export async function registerUser(formData: any) {
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
+  try {
+    await axAPI.post(`${backendUrl}/register`, formData);
+    return true;
+  } catch {
+    return false;
+  }
+}
