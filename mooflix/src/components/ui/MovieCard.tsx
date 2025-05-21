@@ -2,8 +2,10 @@ import { Badge, Button, Card, Group, Image, Text } from "@mantine/core";
 import type { Movie } from "../../types/Movie";
 import { Heart } from "lucide-react";
 import { markMovieAsLiked } from "../../services/userService";
+import { useState } from "react";
 
 function MovieCard({ Poster, Title, Type, Year, imdbID }: Movie) {
+  const [isLiked, setIsLiked] = useState(false);
   const likeMovie = async () => {
     const response = await markMovieAsLiked({
       Poster,
@@ -12,9 +14,8 @@ function MovieCard({ Poster, Title, Type, Year, imdbID }: Movie) {
       Year,
       imdbID,
     });
-
     if (response) {
-      console.log("showingNotif");
+      setIsLiked((prevVal) => !prevVal);
     }
   };
   return (
@@ -24,9 +25,11 @@ function MovieCard({ Poster, Title, Type, Year, imdbID }: Movie) {
       </Card.Section>
 
       <Group className="">
-        <Text fw={500}>{Title}</Text>
+        <Text fw={500} c="white">
+          {Title}
+        </Text>
         <Button onClick={likeMovie}>
-          <Heart />
+          <Heart className="" fill={isLiked ? "red" : "none"} />
         </Button>
       </Group>
     </Card>

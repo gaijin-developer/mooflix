@@ -13,7 +13,6 @@ class UsersController extends Controller
 {
     //
     public function __construct(protected MovieServices $movieServices,protected FavoriteServices $favoriteServices) {
-
     }
 
     public function likeMovie(Request $request){
@@ -23,9 +22,8 @@ class UsersController extends Controller
 
             $user = Auth::user();
 
-            Log::info($user);
-
             $movie = $this->movieServices->createNew($movieDetails);
+
             $movie = $this->favoriteServices->createNew($movie,$user);
 
             return response()->json(["movie"=>$movie],200);

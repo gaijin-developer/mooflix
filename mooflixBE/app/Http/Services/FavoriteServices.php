@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Services;
 
-use App\Http\Controllers\MoviesController;
+
 use App\Http\Repositories\FavouriteRepository;
 use App\Models\Movie;
 use App\Models\User;
