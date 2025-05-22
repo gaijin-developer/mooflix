@@ -14,8 +14,8 @@ function NewPassword() {
   const form = useForm({
     mode: "uncontrolled",
     initialValues: {
-      password: "password",
-      repassword: "password",
+      password: "",
+      repassword: "",
     },
 
     validate: {

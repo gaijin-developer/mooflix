@@ -38,12 +38,11 @@ function SearchResultSection({ sectionTitle, movies }: Props) {
   );
 
   return (
-    <div className="my-12 m-6" ref={containerRef}>
+    <div className="my-12 p-2 max-w-[1300px] m-auto" ref={containerRef}>
       <h2 className="text-3xl font-bold">{sectionTitle}</h2>
       <div
-        className="my-4 grid grid-cols-2 
-      md:grid-cols-4 lg:grid-cols-5 
-      gap-4 max-w-[1300px] 
+        className="my-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5
+      gap-4 
       m-auto pb-16 cardsWrapper"
       >
         {movies.map((movie: Movie) => (

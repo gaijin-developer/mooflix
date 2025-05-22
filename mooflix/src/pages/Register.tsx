@@ -18,8 +18,8 @@ function Register() {
       lastName: "",
       email: "",
       phone: "",
-      password: "password",
-      repassword: "password",
+      password: "",
+      repassword: "",
       termsOfService: false,
     },
 

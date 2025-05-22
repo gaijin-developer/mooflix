@@ -14,8 +14,8 @@ function Login() {
   const form = useForm({
     mode: "uncontrolled",
     initialValues: {
-      email: "frank.entsie301@gmail.com",
-      password: "password",
+      email: "",
+      password: "",
     },
 
     validate: {

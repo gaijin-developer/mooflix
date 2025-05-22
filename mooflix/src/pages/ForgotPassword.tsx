@@ -14,7 +14,7 @@ function ForgotPassword() {
   const form = useForm({
     mode: "uncontrolled",
     initialValues: {
-      email: "frank.entsie301@gmail.com",
+      email: "",
     },
 
     validate: {
