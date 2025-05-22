@@ -43,4 +43,16 @@ class HomeController extends Controller
         }
     }
 
+    public function getMovieDetails(Request $request){
+        try {
+            $movieId = $request->movieId;
+
+            $movieDetails = $this->homeService->getMovieDetails($movieId);
+
+        return response()->json($movieDetails,200);
+        } catch (Exception $e) {
+            //throw $th;
+        }
+    }
+
 }

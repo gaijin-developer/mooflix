@@ -33,8 +33,6 @@ class AuthRepository extends BaseRepository {
         ]);
     }
 
-
-
     public function getTokenByEmail($email){
         $email = trim(strtolower($email));
         return DB::table('password_reset_tokens')

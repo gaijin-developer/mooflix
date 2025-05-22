@@ -1,8 +1,9 @@
-import { Button, Card, Group, Image, Text } from "@mantine/core";
+import { Badge, Button, Card, Group, Image, Text } from "@mantine/core";
 import type { Movie } from "../../types/Movie";
 import { Heart } from "lucide-react";
 
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 function MovieCard({ Poster, Title, Type, Year, imdbID }: Movie) {
   const [isLiked, setIsLiked] = useState(false);
@@ -36,20 +37,46 @@ function MovieCard({ Poster, Title, Type, Year, imdbID }: Movie) {
   }, [existingLikes, imdbID]);
 
   return (
-    <Card padding="" radius="md" maw={300} mah={500}>
-      <Card.Section className="h-[100px]">
-        <Image src={Poster} alt={Title} />
-      </Card.Section>
+    <Link to={`/movie/${imdbID}`}>
+      <Card
+        shadow="sm"
+        padding="lg"
+        radius="md"
+        withBorder
+        style={{ cursor: "pointer" }}
+      >
+        <Card.Section>
+          <Image
+            src={Poster !== "N/A" ? Poster : undefined}
+            alt={Title}
+            height={280}
+            style={{ objectFit: "cover" }}
+          />
+        </Card.Section>
 
-      <Group className="">
-        <Text fw={500} c="white">
-          {Title}
-        </Text>
-        <Button onClick={likeMovie}>
-          <Heart className="" fill={isLiked ? "red" : "none"} />
-        </Button>
-      </Group>
-    </Card>
+        <Group mt="md" mb="xs">
+          <Text lineClamp={2} style={{ flex: 1 }}>
+            {Title}
+          </Text>
+        </Group>
+        <Group justify="space-between">
+          <Text size="sm" c="dimmed">
+            {Year}
+          </Text>
+          <Badge
+            color="blue"
+            variant="light"
+            size="sm"
+            style={{ textTransform: "uppercase" }}
+          >
+            {Type}
+          </Badge>
+          <Button onClick={likeMovie} p={0} bg={"none"}>
+            <Heart className="" fill={isLiked ? "red" : "none"} />
+          </Button>
+        </Group>
+      </Card>
+    </Link>
   );
 }
 

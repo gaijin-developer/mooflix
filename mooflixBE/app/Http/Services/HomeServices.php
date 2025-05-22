@@ -29,4 +29,8 @@ class HomeServices {
             throw new HttpException(500);
         }
     }
+
+    public function getMovieDetails($movieId){
+        return $this->homeRepository->getMovieDetails($movieId);
+    }
 }

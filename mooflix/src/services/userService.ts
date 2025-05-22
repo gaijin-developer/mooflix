@@ -8,7 +8,7 @@ export async function markMovieAsLiked(movieDetails: Movie): Promise<boolean> {
 
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-    const response = await axAPI.post(
+    await axAPI.post(
       `${backendUrl}/likemovie/${movieDetails.imdbID}`,
       movieDetails
     );

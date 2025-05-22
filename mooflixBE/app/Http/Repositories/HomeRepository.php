@@ -19,4 +19,10 @@ class HomeRepository {
         return $movies->json();
     }
 
+    public function getMovieDetails($movieId){
+        $key = config('app.omdb_key');
+        $movies=Http::get("http://www.omdbapi.com/?i={$movieId}&apikey=".$key);
+        return $movies->json();
+    }
+
 }
