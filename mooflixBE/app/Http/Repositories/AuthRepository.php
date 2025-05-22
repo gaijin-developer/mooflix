@@ -41,17 +41,17 @@ class AuthRepository extends BaseRepository {
     }
 
     public function deleteTokenByEmail($email){
+        Log::info($email);
         $email = trim(strtolower($email));
-        $token = DB::table('password_reset_tokens')
+        return DB::table('password_reset_tokens')
             ->where("email",$email)
-            ->first();
-        return $token->delete();
+            ->delete();
     }
 
     public function setNewUserPasswordWithEmail($email,$password){
         $user = User::where("email",$email)->first();
+
         $user->password = $password;
-        Log::info($user);
         return $user->save();
     }
 }

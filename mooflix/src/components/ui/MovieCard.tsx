@@ -1,12 +1,4 @@
-import {
-  Badge,
-  Button,
-  Card,
-  CardSection,
-  Group,
-  Image,
-  Text,
-} from "@mantine/core";
+import { Badge, Button, Card, Group, Image, Text } from "@mantine/core";
 import type { Movie } from "../../types/Movie";
 import { Heart } from "lucide-react";
 

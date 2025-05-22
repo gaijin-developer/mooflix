@@ -66,11 +66,8 @@ export async function submitNewPassword(formData: {
   repassword: string;
 }): Promise<boolean> {
   try {
-    console.log("submitting");
     const recEmail = localStorage.getItem("recoveryEmail");
     let resetToken = localStorage.getItem("resetToken");
-
-    console.log(resetToken, recEmail);
 
     if (recEmail && resetToken) {
       const email = JSON.parse(recEmail);
@@ -81,6 +78,9 @@ export async function submitNewPassword(formData: {
         email,
         resetToken,
       });
+
+      localStorage.removeItem("recoveryEmail");
+      localStorage.removeItem("resetToken");
 
       return true;
     }

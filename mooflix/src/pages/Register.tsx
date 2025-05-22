@@ -67,7 +67,7 @@ function Register() {
   };
 
   return (
-    <div className="mt-6">
+    <div className="mt-6 px-6 pb-12">
       {showNotif && (
         <NotificationBlock
           color={registrationSucceeded ? "green" : "red"}
@@ -80,7 +80,7 @@ function Register() {
           onSubmit={form.onSubmit((values) => submitForm(values))}
           className="border-2 px-4 py-12 rounded-2xl"
         >
-          <h1 className="text-lg">登録</h1>
+          <h2 className="text-3xl text-center pb-2">登録</h2>
           <div className="space-y-4">
             <div className="flex gap-2 w-full">
               <TextInput
@@ -141,7 +141,7 @@ function Register() {
             />
 
             <Group justify="center" mt="md">
-              <Button type="submit">ログイン</Button>
+              <Button type="submit">登録</Button>
             </Group>
             <div>
               <p>

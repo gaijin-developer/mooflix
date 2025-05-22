@@ -43,7 +43,7 @@ function Login() {
     setNotification(false);
   };
   return (
-    <div className="grid max-w-[500px] m-auto px-4">
+    <div className="grid max-w-[500px] m-auto px-6">
       {notification && (
         <NotificationBlock
           color="red"
@@ -55,7 +55,7 @@ function Login() {
         onSubmit={form.onSubmit((values) => signIn(values))}
         className="border-2 px-4 py-12 rounded-2xl mt-16"
       >
-        <h2 className="text-lg">ログイン</h2>
+        <h2 className="text-center text-3xl">ログイン</h2>
         <div className=" space-y-4">
           <TextInput
             label="メール"

@@ -51,7 +51,7 @@ class HomeController extends Controller
 
         return response()->json($movieDetails,200);
         } catch (Exception $e) {
-            //throw $th;
+            return response()->json(null,500);
         }
     }
 

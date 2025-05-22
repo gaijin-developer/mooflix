@@ -90,7 +90,7 @@ function NewPassword() {
             </div>
 
             <Group justify="center" mt="md">
-              <Button type="submit">ログイン</Button>
+              <Button type="submit">保存する</Button>
             </Group>
           </div>
         </form>
