@@ -16,7 +16,7 @@ export async function getHomeVideos() {
     const response = await axAPI.get(`/movies`);
     return response.data.Search;
   } catch {
-    // console.log("error");
+    throw new Response("Failed to load home movies", { status: 500 });
   }
 }
 export async function getMovieDetails({ params }: LoaderFunctionArgs) {
@@ -28,6 +28,6 @@ export async function getMovieDetails({ params }: LoaderFunctionArgs) {
     const response = await axAPI.get(`/movies/details/${movieId}`);
     return response.data;
   } catch {
-    // console.log("error");
+    throw new Response("Failed to load movie", { status: 500 });
   }
 }

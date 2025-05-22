@@ -1,4 +1,4 @@
-import { createBrowserRouter, type LoaderFunctionArgs } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 
 import MainLayout from "../layouts/MainLayout";
 import Error from "../pages/Error";

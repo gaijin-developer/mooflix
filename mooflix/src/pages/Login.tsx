@@ -33,7 +33,7 @@ function Login() {
   const signIn = async (values: { email: string; password: string }) => {
     const response = await loginUser(values);
     if (response) {
-      window.location.href = "/";
+      window.location.href = "/home";
     } else {
       setNotification(true);
     }

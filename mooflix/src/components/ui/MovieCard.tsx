@@ -1,12 +1,24 @@
-import { Badge, Button, Card, Group, Image, Text } from "@mantine/core";
+import {
+  Badge,
+  Button,
+  Card,
+  CardSection,
+  Group,
+  Image,
+  Text,
+} from "@mantine/core";
 import type { Movie } from "../../types/Movie";
 import { Heart } from "lucide-react";
 
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useMediaQuery } from "@mantine/hooks";
 
 function MovieCard({ Poster, Title, Type, Year, imdbID }: Movie) {
   const [isLiked, setIsLiked] = useState(false);
+  const isPC = useMediaQuery("(min-width: 820px)");
+  const [imageUrl, setImageUrl] = useState(Poster);
+
   const existingLikes: string | null = localStorage.getItem("likes");
 
   const likeMovie = async () => {
@@ -37,23 +49,41 @@ function MovieCard({ Poster, Title, Type, Year, imdbID }: Movie) {
   }, [existingLikes, imdbID]);
 
   return (
-    <Link to={`/movie/${imdbID}`}>
-      <Card
-        shadow="sm"
-        padding="lg"
-        radius="md"
-        withBorder
-        style={{ cursor: "pointer" }}
-      >
-        <Card.Section>
+    <Card
+      padding="none"
+      radius="md"
+      withBorder
+      style={{ cursor: "pointer" }}
+      h={"100%"}
+    >
+      <Link to={`/movie/${imdbID}`}>
+        <section className="h-full">
           <Image
-            src={Poster !== "N/A" ? Poster : undefined}
+            src={
+              imageUrl !== "N/A"
+                ? imageUrl
+                : "https://images.pexels.com/photos/28216688/pexels-photo-28216688/free-photo-of-autumn-camping.png?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+            }
+            onError={() => {
+              setImageUrl(
+                "https://images.pexels.com/photos/28216688/pexels-photo-28216688/free-photo-of-autumn-camping.png?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+              );
+            }}
             alt={Title}
             height={280}
             style={{ objectFit: "cover" }}
+            h={isPC ? 350 : 300}
           />
-        </Card.Section>
-
+        </section>
+      </Link>
+      <section
+        className="h-full p-2"
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+        }}
+      >
         <Group mt="md" mb="xs">
           <Text lineClamp={2} style={{ flex: 1 }}>
             {Title}
@@ -75,8 +105,8 @@ function MovieCard({ Poster, Title, Type, Year, imdbID }: Movie) {
             <Heart className="" fill={isLiked ? "red" : "none"} />
           </Button>
         </Group>
-      </Card>
-    </Link>
+      </section>
+    </Card>
   );
 }
 

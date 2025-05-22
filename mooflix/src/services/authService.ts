@@ -1,6 +1,10 @@
 import axAPI from "../lib/axios";
+import type { RegisterFormData } from "../types/registerform";
 
-export async function loginUser(values: { email: string; password: string }) {
+export async function loginUser(values: {
+  email: string;
+  password: string;
+}): Promise<boolean> {
   try {
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
@@ -15,7 +19,9 @@ export async function loginUser(values: { email: string; password: string }) {
   }
 }
 
-export async function registerUser(formData: any) {
+export async function registerUser(
+  formData: RegisterFormData
+): Promise<boolean> {
   try {
     await axAPI.post(`/register`, formData);
     return true;
@@ -24,9 +30,10 @@ export async function registerUser(formData: any) {
   }
 }
 
-export async function getPasswordRecoveryCode(formData: { email: string }) {
+export async function getPasswordRecoveryCode(formData: {
+  email: string;
+}): Promise<boolean> {
   try {
-    // console.log(formData.email);
     localStorage.setItem("recoveryEmail", JSON.stringify(formData.email));
     await axAPI.post(`/forgot-password`, formData);
     return true;

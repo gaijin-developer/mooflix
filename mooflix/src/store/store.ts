@@ -1,7 +1,15 @@
 import { create } from "zustand";
+import type { Movie } from "../types/Movie";
 
-const useStore = create((set) => ({
-  isLoggedIn: false,
-  movies: [],
-  increasePopulation: () => set((state) => ({ bears: state.bears + 1 })),
+type State = {
+  searchedMovies: Movie[];
+};
+
+type Actions = {
+  setSearchedMovies: (movies: Movie[]) => void;
+};
+
+export const useStore = create<State & Actions>((set) => ({
+  searchedMovies: [],
+  setSearchedMovies: (movies) => set(() => ({ searchedMovies: movies })),
 }));

@@ -13,25 +13,22 @@ type Props = {
 };
 
 function SearchResultSection({ sectionTitle, movies }: Props) {
-  const cardsRef = useRef<HTMLDivElement[]>([]);
   const containerRef = useRef(null);
 
   useGSAP(
     () => {
-      containerRef.current!.style.visibility = "visible";
       gsap.fromTo(
-        cardsRef.current,
+        ".cardsWrapper",
         {
-          opacity: 0,
-          y: 30,
-          stagger: 0.1,
+          y: 10,
           duration: 0.5,
+          height: 0,
           ease: "power2.out",
         },
         {
           opacity: 1,
+          height: "auto",
           y: 0,
-          stagger: 0.1,
           duration: 0.5,
           ease: "power2.out",
         }
@@ -41,33 +38,23 @@ function SearchResultSection({ sectionTitle, movies }: Props) {
   );
 
   return (
-    <div
-      className="my-12 m-6"
-      ref={containerRef}
-      style={{ visibility: "hidden" }}
-    >
+    <div className="my-12 m-6" ref={containerRef}>
       <h2 className="text-3xl font-bold">{sectionTitle}</h2>
       <div
         className="my-4 grid grid-cols-2 
       md:grid-cols-4 lg:grid-cols-5 
       gap-4 max-w-[1300px] 
-      m-auto pb-16 "
+      m-auto pb-16 cardsWrapper"
       >
-        {movies.map((movie: Movie, i) => (
-          <div
+        {movies.map((movie: Movie) => (
+          <MovieCard
             key={movie.imdbID}
-            ref={(el) => {
-              if (el) cardsRef.current[i] = el;
-            }}
-          >
-            <MovieCard
-              Poster={movie.Poster}
-              Title={movie.Title}
-              Type={movie.Type}
-              Year={movie.Year}
-              imdbID={movie.imdbID}
-            />
-          </div>
+            Poster={movie.Poster}
+            Title={movie.Title}
+            Type={movie.Type}
+            Year={movie.Year}
+            imdbID={movie.imdbID}
+          />
         ))}
       </div>
     </div>
