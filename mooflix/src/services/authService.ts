@@ -16,11 +16,68 @@ export async function loginUser(values: { email: string; password: string }) {
 }
 
 export async function registerUser(formData: any) {
-  const backendUrl = import.meta.env.VITE_BACKEND_URL;
-
   try {
-    await axAPI.post(`${backendUrl}/register`, formData);
+    await axAPI.post(`/register`, formData);
     return true;
+  } catch {
+    return false;
+  }
+}
+
+export async function getPasswordRecoveryCode(formData: { email: string }) {
+  try {
+    // console.log(formData.email);
+    localStorage.setItem("recoveryEmail", JSON.stringify(formData.email));
+    await axAPI.post(`/forgot-password`, formData);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+export async function submitPasswordRecoveryCode(formData: { code: string }) {
+  try {
+    const recEmail = localStorage.getItem("recoveryEmail");
+    if (recEmail) {
+      const email = JSON.parse(recEmail);
+      const response = await axAPI.post(`/submit-recovery-code`, {
+        ...formData,
+        email,
+      });
+      const newPassToken = response.data.reset_token;
+
+      localStorage.setItem("resetToken", newPassToken);
+      return true;
+    }
+  } catch {
+    return false;
+  }
+}
+
+export async function submitNewPassword(formData: {
+  password: string;
+  repassword: string;
+}): Promise<boolean> {
+  try {
+    console.log("submitting");
+    const recEmail = localStorage.getItem("recoveryEmail");
+    let resetToken = localStorage.getItem("resetToken");
+
+    console.log(resetToken, recEmail);
+
+    if (recEmail && resetToken) {
+      const email = JSON.parse(recEmail);
+      resetToken = JSON.parse(resetToken);
+
+      await axAPI.post(`/new-password`, {
+        password: formData.password,
+        email,
+        resetToken,
+      });
+
+      return true;
+    }
+    return false;
   } catch {
     return false;
   }

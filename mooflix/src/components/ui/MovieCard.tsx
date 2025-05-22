@@ -1,7 +1,7 @@
-import { Badge, Button, Card, Group, Image, Text } from "@mantine/core";
+import { Button, Card, Group, Image, Text } from "@mantine/core";
 import type { Movie } from "../../types/Movie";
 import { Heart } from "lucide-react";
-import { markMovieAsLiked } from "../../services/userService";
+
 import { useEffect, useState } from "react";
 
 function MovieCard({ Poster, Title, Type, Year, imdbID }: Movie) {

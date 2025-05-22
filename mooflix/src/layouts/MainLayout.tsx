@@ -1,7 +1,12 @@
 import { Outlet } from "react-router";
 import Header from "../components/common/header/Header";
+import { useEffect } from "react";
 
 function MainLayout() {
+  useEffect(() => {
+    const spinner = document.getElementById("spinnerWrapper");
+    spinner?.remove();
+  }, []);
   return (
     <main className="bg-[var(--background-primary)] text-[var(--text-primary)] min-h-screen">
       <Header />

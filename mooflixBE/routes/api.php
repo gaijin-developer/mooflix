@@ -19,6 +19,11 @@ Route::post('/register', [AuthController::class,"register"]);
 Route::get('/search',[HomeController::class,'getSearchResults'])->middleware('auth:api');
 Route::post('/likemovie/{imdbID}', [UsersController::class,"likeMovie"])->middleware('auth:api');
 
+Route::post('/forgot-password', [AuthController::class,"sendPasswordRecoveryCode"]);
+
+Route::post('/submit-recovery-code', [AuthController::class,"confirmRecoveryCode"]);
+Route::post('/new-password', [AuthController::class,"setNewPassword"]);
+
 
 ///jwt
 Route::group([

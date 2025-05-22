@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Services\AuthServices;
 use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
@@ -69,4 +72,40 @@ class AuthController extends Controller
             'expires_in' => $guard->factory()->getTTL() * 60
         ]);
     }
+
+    public function sendPasswordRecoveryCode(Request $request){
+        try {
+            $email = $request['email'];
+            $this->authServices->sendPasswordRecoveryEmail($email);
+            return response()->json("Token created and is valid for 30 mins",200);
+        } catch (ValidationException $e) {
+            return response()->json("Validation keys do not match",422);
+        }catch(Exception $e){
+            return response()->json("Failed to verify token",500);
+        }
+    }
+
+    public function confirmRecoveryCode(Request $request){
+        try{
+            $code = $request["code"];
+            $email = $request["email"];
+            $token = $this->authServices->confirmRecoveryCode($code,$email);
+            return response()->json(["reset_token"=>$token],200);
+        }catch(Exception $e){
+            return response()->json("failed",500);
+        }
+    }
+
+    public function setNewPassword(Request $request): JsonResponse{
+        try {
+            $email = $request["email"];
+        $password = $request["password"];
+        $token = $request["resetToken"];
+        $this->authServices->setNewPassword($email,$password,$token);
+        return response()->json("Password Reset successfully",200);
+        } catch (Exception $e) {
+            return response()->json("failed to set new password",500);
+        }
+    }
+
 }

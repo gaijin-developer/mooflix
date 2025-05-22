@@ -1,11 +1,11 @@
 import { useForm } from "@mantine/form";
-import { Button, Checkbox, Group, TextInput } from "@mantine/core";
-import { Link, useNavigate } from "react-router";
+import { Button, Group, TextInput } from "@mantine/core";
+import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 import NotificationBlock from "../components/ui/NotificationBlock";
-import { registerUser } from "../services/authService";
+import { submitNewPassword } from "../services/authService";
 
-function Register() {
+function NewPassword() {
   const [showNotif, setShownotif] = useState<boolean>(false);
   const [notifText, setNotifText] = useState<string>("");
   const navigate = useNavigate();
@@ -14,47 +14,36 @@ function Register() {
   const form = useForm({
     mode: "uncontrolled",
     initialValues: {
-      firstName: "",
-      lastName: "",
-      email: "",
-      phone: "",
       password: "password",
       repassword: "password",
-      termsOfService: false,
     },
 
     validate: {
-      email: (value) => (/^\S+@\S+$/.test(value) ? null : "無効なメール"),
-      firstName: (value) => (value.length > 0 ? null : "無効な姓"),
-      lastName: (value) => (value.length > 0 ? null : "無効な姓"),
-      phone: (value) =>
-        value.length > 8 && value.length < 12 ? null : "無効な電話",
       password: (value) => (value.length >= 6 ? null : "パスワードが無効"),
       repassword: (value, values) =>
         value === values.password ? null : "パスワードが一致しない",
-      termsOfService: (value) => (value == true ? null : "同意してください"),
     },
   });
 
   useEffect(() => {
     const token = sessionStorage.getItem("access_token");
     if (token) {
-      navigate("/home");
+      navigate("/");
     }
   }, [navigate]);
 
   const submitForm = async (formData: typeof form.values) => {
-    const response = await registerUser(formData);
+    const response = await submitNewPassword(formData);
 
     if (response) {
       setNotifText("Created Successfully, redirecting");
       setRegistrationSucceeded(true);
       setShownotif(true);
+
       navigate("/login");
       return;
     } else {
-      //   const exErr = error as AxiosError;
-      setNotifText("Failed to register new User");
+      setNotifText("Failed to register new password");
       setRegistrationSucceeded(false);
       setShownotif(true);
     }
@@ -65,9 +54,8 @@ function Register() {
     setShownotif(false);
     setRegistrationSucceeded(false);
   };
-
   return (
-    <div className="mt-6">
+    <div className="mt-6 p-6">
       {showNotif && (
         <NotificationBlock
           color={registrationSucceeded ? "green" : "red"}
@@ -80,40 +68,8 @@ function Register() {
           onSubmit={form.onSubmit((values) => submitForm(values))}
           className="border-2 px-4 py-12 rounded-2xl"
         >
-          <h1 className="text-lg">登録</h1>
+          <h2 className="text-lg text-center">新しいパスワード</h2>
           <div className="space-y-4">
-            <div className="flex gap-2 w-full">
-              <TextInput
-                label="姓"
-                placeholder="木村"
-                key={form.key("firstName")}
-                {...form.getInputProps("firstName")}
-                className="text-left w-full"
-              />
-              <TextInput
-                label="名"
-                placeholder="島袋"
-                key={form.key("lastName")}
-                {...form.getInputProps("lastName")}
-                className="text-left w-full"
-              />
-            </div>
-            <div className="space-y-4">
-              <TextInput
-                label="メール"
-                placeholder="your@email.com"
-                key={form.key("email")}
-                {...form.getInputProps("email")}
-                className="text-left w-full"
-              />
-              <TextInput
-                label="電話"
-                placeholder="090**********"
-                key={form.key("phone")}
-                {...form.getInputProps("phone")}
-                className="text-left w-full"
-              />
-            </div>
             <div className="space-y-4">
               <TextInput
                 label="パッスワード"
@@ -133,22 +89,9 @@ function Register() {
               />
             </div>
 
-            <Checkbox
-              mt="md"
-              label="プライバシーポリシー同意する"
-              key={form.key("termsOfService")}
-              {...form.getInputProps("termsOfService", { type: "checkbox" })}
-            />
-
             <Group justify="center" mt="md">
               <Button type="submit">ログイン</Button>
             </Group>
-            <div>
-              <p>
-                すでにアカウントをお持ちですか？<Link to="/login">こちら</Link>
-                からサインインしてください。
-              </p>
-            </div>
           </div>
         </form>
       </div>
@@ -156,4 +99,4 @@ function Register() {
   );
 }
 
-export default Register;
+export default NewPassword;

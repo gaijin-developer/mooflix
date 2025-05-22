@@ -1,7 +1,6 @@
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import type { Movie } from "../../../types/Movie";
 import gsap from "gsap";
-import LoadingSkeleton from "../../ui/LoadingSkeleton";
 import MovieCard from "../../ui/MovieCard";
 
 import { useGSAP } from "@gsap/react";

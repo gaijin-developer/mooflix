@@ -9,10 +9,14 @@ import Home from "../pages/Home";
 import LandingPage from "../pages/LandingPage";
 import PrivateRoute from "../components/auth/PrivateRoute";
 import { getHomeVideos } from "../services/appService";
+import EnterRecoveryCode from "../pages/EnterRecoveryCode";
+import NewPassword from "../pages/NewPassword";
+import LoadingSkeleton from "../components/ui/LoadingSkeleton";
 
 export const router = createBrowserRouter([
   {
     path: "/",
+    hydrateFallbackElement: <LoadingSkeleton />,
     element: <MainLayout />,
     errorElement: <Error />,
     children: [
@@ -23,6 +27,7 @@ export const router = createBrowserRouter([
           const res = await getHomeVideos();
           return res;
         },
+        HydrateFallback: LoadingSkeleton,
         element: (
           <PrivateRoute>
             <Home />
@@ -32,6 +37,8 @@ export const router = createBrowserRouter([
       { path: "/login", element: <Login /> },
       { path: "/register", element: <Register /> },
       { path: "/forgot-password", element: <ForgotPassword /> },
+      { path: "/enter-recovery-code", element: <EnterRecoveryCode /> },
+      { path: "/new-password", element: <NewPassword /> },
     ],
   },
 ]);

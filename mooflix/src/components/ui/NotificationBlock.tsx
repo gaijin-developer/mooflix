@@ -23,12 +23,11 @@ function NotificationBlock({ color, notifText, closeNotif }: Props) {
     },
     {
       scope: notificationContainer,
-      //   dependencies: [color],
     }
   );
   return (
     <div ref={notificationContainer}>
-      <div className="notifContainer max-w-[500px] absolute">
+      <div className="notifContainer max-w-[500px] absolute top-16 z-3">
         <Notification
           title=""
           color={color}

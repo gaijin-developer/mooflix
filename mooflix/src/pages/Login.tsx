@@ -26,7 +26,7 @@ function Login() {
   useEffect(() => {
     const token = sessionStorage.getItem("access_token");
     if (token) {
-      navigate("/");
+      navigate("/home");
     }
   }, [navigate]);
 
@@ -80,6 +80,9 @@ function Login() {
             <p>
               アカウントをお持ちでない方は、<Link to="/register">こちら</Link>
               からご登録ください。
+            </p>
+            <p>
+              パスワード忘れた方は、<Link to="/forgot-password">こちら</Link>。
             </p>
           </div>
         </div>
